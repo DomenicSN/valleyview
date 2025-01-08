@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valley View Farm</title>
+    <style>
+        /* General Reset */
+        /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-color: #e8f5e9;
+    color: #2C6E49;
+}
+
+/* Header Styling */
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+/* Menu Toggle Container */
+.menu-toggle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 8px;
+    padding: 8px;
+    width: 50px;
+    height: 60px;
+}
+
+.menu-toggle {
+    font-size: 2rem;
+    color: white;
+    background-color: transparent;
+    border: none;
+}
+
+.menu-text {
+    font-size: 0.8rem;
+    color: white;
+    margin-top: -5px;
+}
+
+/* Navigation Drawer */
+.drawer {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 200px;
+    height: 100%;
+    background-color: rgba(51, 51, 51, 0.9);
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+.drawer a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: white;
+    display: block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.drawer a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.drawer.active {
+    left: 0;
+}
+
+/* Section Styling */
+.section {
+    padding: 60px;
+    margin: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Home Section */
+#home h2 {
+    font-size: 5rem;
+    color: #388E3C;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#home .slogan {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #388E3C;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#home img.farm-image {
+    width: 70%;
+    height: auto;
+    margin-top: 30px;
+    display: block;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Products Section */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product-item {
+    background-color: #f9fbe7;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.product-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.product-item p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #388E3C;
+}
+
+/* Contact Section */
+#contact ul.contact-list {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+#contact ul.contact-list li {
+    margin-right: 20px;
+}
+
+#contact ul.contact-list a img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+#contact ul.contact-list a img:hover {
+    transform: scale(1.1);
+}
+
+.google-map-link img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.google-map-link img:hover {
+    transform: scale(1.1);
+}
+
+footer {
+            background-color: #000;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    #home h2 {
+        font-size: 2.5rem;
+    }
+
+    #home .slogan {
+        font-size: 1.4rem;
+    }
+
+    .section {
+        padding: 40px;
+    }
+
+    .drawer {
+        width: 200px;
+    }
+
+    .product-item {
+        padding: 15px;
+    }
+}
+
+@media (orientation: landscape) and (max-width: 1024px) {
+    .container {
+        padding: 15px;
+    }
+
+    .section {
+        padding: 40px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    #home img.farm-image {
+        width: 80%;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="menu-toggle-container" onclick="toggleDrawer()">
+        <button class="menu-toggle">&#9776;</button>
+        <span class="menu-text">Menu</span>
+    </div>
+    <h1>Valley View Farm</h1>
+    <nav class="drawer" id="drawer">
+        <!-- Links to other pages -->
+        <div class="drawer-group">
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact Us</a>
+            <a href="products.html">Gallery</a>
+            <a href="Prices.html">Prices</a>
+        </div>
+    </nav>
+</header>
+
+<!-- Home Section -->
+<section id="home" class="section">
+    <div class="container">
+        <h2>Welcome to Valley View Farm</h2>
+        <div class="slogan">
+            You want it fresh, we got it fresh!
+        </div>
+        <img src="icons/im.jpg" alt="Farm Image" class="farm-image">
+    </div>
+</section>
+
+<!-- About Us Section -->
+<section id="about" class="section">
+    <div class="container">
+        <h2>About Us</h2>
+        <p>Welcome to Valley View Farm, your trusted source for fresh, high-quality agricultural products. Nestled in the heart of lush landscapes, we are dedicated to sustainable farming practices and delivering excellence to our community.</p>
+        </br>
+		</br>
+		<h3>Our Specialties:</h3>
+        <ul class="specialties-list">
+            <li><strong>* Chicken Broilers:</strong> Premium-quality broilers raised to meet the highest standards of nutrition and taste.</li>
+            <li><strong>* Chicken Roosters:</strong> Robust roosters nurtured for superior health and vitality.</li>
+            <li><strong>* Vegetables:</strong> Fresh and nutrient-rich vegetables from farm to table.</li>
+            <li><strong>* Eggs:</strong> Fresh eggs from healthy, free-range hens.</li>
+        </ul>
+		</br>
+		<h2>Operating hours</h2>
+        <ul class="specialties-list">
+            <li><strong>* Monday to Saturday : 07:00 AM to 17:00 PM .</li>
+            
+        </ul>
+    </div>
+</section>
+
+<!-- Contact Us Section -->
+<section id="contact" class="section">
+    <div class="container">
+        <h2>Contact Us</h2>
+		</br>
+        <p>Have questions or want to learn more about our farm? Get in touch with us via any of the methods below:</p>
+        <ul class="contact-list">
+            <li><a href="tel:+27832546387"><img src="icons/phone icon.jpeg" alt="Phone Icon"></a></li>
+            <li><a href="mailto:benjamin@ngwenyaforestry.co.za"><img src="icons/email icon.png" alt="Email Icon"></a></li>
+            <li><a href="https://www.facebook.com/valley.view.farm.2025?mibextid=ZbWKwL" target="_blank"><img src="icons/facebook icon.png" alt="Facebook Icon"></a></li>
+            <li><a href="https://wa.me/+27832546387" target="_blank"><img src="icons/whatsapp icon.png" alt="WhatsApp Icon"></a></li>
+            <li><a href="https://instagram.com/valley.view.farm.2025" target="_blank"><img src="icons/instagram icon.png" alt="Instagram Icon"></a></li>
+        </ul>
+        </br>
+        <h3>Our Location</h3>
+        <p>We are located in Msholozi Stand no: B1021 near Woza Woza:</p>
+        <a href="https://www.google.com/maps/place/25%C2%B020'46.9%22S+30%C2%B057'55.9%22E/@-25.3463997,30.9655673,19z/data=!4m4!3m3!8m2!3d-25.3463611!4d30.9655278?source=lnms" target="_blank" class="google-map-link">
+            <img src="icons/google maps icon.png" alt="Google Maps Icon">
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Valley View Farm | All Rights Reserved</p>
+</footer>
+
+<script>
+    function toggleDrawer() {
+        const drawer = document.getElementById("drawer");
+        drawer.classList.toggle("active");
+    }
+
+    window.onclick = function(event) {
+        const drawer = document.getElementById("drawer");
+        const menuToggle = document.querySelector(".menu-toggle-container");
+        
+        if (!menuToggle.contains(event.target) && drawer.classList.contains("active")) {
+            drawer.classList.remove("active"); // Close drawer if click is outside the menu
+        }
+    };
+</script>
+
+</body>
+</html>

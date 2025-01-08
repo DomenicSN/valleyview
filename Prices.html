@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valley View Farm</title>
+    
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #e8f5e9;
+            color: #2C6E49;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            justify-content: flex-start; /* Align items to the start */
+            align-items: center;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 10px; /* Space between the menu icon and the website name */
+        }
+
+        /* Hamburger Button Container */
+        .menu-toggle-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            cursor: pointer;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 8px;
+            width: 50px;
+            height: 60px;
+        }
+
+        .menu-toggle {
+            font-size: 2rem;
+            color: white;
+            background-color: transparent;
+            border: none;
+        }
+
+        .menu-text {
+            font-size: 0.8rem;
+            color: white;
+            margin-top: -5px;
+        }
+
+        /* Navigation Drawer */
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: rgba(51, 51, 51, 0.9);
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .drawer a {
+            padding: 8px 12px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: white;
+            display: block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .drawer a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .drawer.active {
+            left: 0;
+        }
+
+        .drawer-group {
+            margin-bottom: 20px;
+        }
+
+        .drawer-group h3 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            padding: 60px;
+            margin: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .centered-comment {
+            font-size: 3rem;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #388E3C;
+        }
+
+        .slogan {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .price-list-container, .farm-updates-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 97%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .price-list-section h1, .farm-updates-section h1 {
+            font-size: 2rem;
+            color: #2C6E49;
+            margin-bottom: 10px;
+        }
+
+        .price-list-section p, .farm-updates-section p {
+            font-size: 1.2rem;
+            color: #388E3C;
+            margin-bottom: 20px;
+        }
+
+        .price-list, .farm-updates {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .price-list li, .farm-updates li {
+            font-size: 1.1rem;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .admin-section {
+            display: none;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 97%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer {
+            background-color: #000;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Enlarging the text fields and providing independent buttons for each */
+        .admin-section input, .admin-section textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .admin-section button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .admin-section button:hover {
+            background-color: #388E3C;
+        }
+
+        @media (max-width: 1024px) and (min-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .price-list-section {
+                padding-left: 20px;
+            }
+
+            .price-list-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .centered-comment {
+                font-size: 2.5rem;
+            }
+
+            .slogan {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.2rem;
+            }
+
+            .centered-comment {
+                font-size: 2rem;
+            }
+
+            .slogan {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="errorMessage" style="color: red; font-weight: bold; display: none;"></div>
+
+<header>
+    <div class="menu-toggle-container" onclick="toggleDrawer()">
+        <button class="menu-toggle">&#9776;</button>
+        <span class="menu-text">Menu</span>
+    </div>
+    <h1>Valley View Farm</h1>
+    <nav class="drawer" id="drawer">
+        <div class="drawer-group">
+            <a href="index.html">Home</a>
+            <a href="products.html">Gallery</a>
+            <a href="#about">About Us</a>
+            <a href="javascript:void(0);" onclick="adminAccess()">Admin</a> <!-- Admin Button -->
+        </div>
+    </nav>
+</header>
+
+<section id="home" class="section">
+    <div class="container">
+        <p class="centered-comment">You want it fresh, we got it fresh!</p>
+        <div class="slogan">
+            Take a look at our affordable prices
+        </div>
+    </div>
+</section>
+
+<section id="about" class="section">
+    <div class="container">
+        <h2>About Us</h2>
+		</br>
+        <p>At Valley View Farm, we pride ourselves on offering fresh, high-quality crops and healthy poultry at affordable prices</p>
+		 </div>
+</section>
+
+<!-- Price List Container -->
+<div class="price-list-container">
+    <div class="price-list-section">
+        <h1>Current Prices:</h1>
+        <ul class="price-list" id="priceList">
+            <!-- Prices will be added here dynamically -->
+        </ul>
+    </div>
+</div>
+
+<!-- Farm Updates Container -->
+<div class="farm-updates-container">
+    <div class="farm-updates-section">
+        <h1>Farm Updates & Specials:</h1>
+        <ul class="farm-updates" id="farmUpdates">
+            <!-- Farm updates will be added here dynamically -->
+        </ul>
+    </div>
+</div>
+
+<!-- Admin Section -->
+<div id="adminSection" class="admin-section">
+    <h2>Admin Panel</h2>
+    <label for="priceInput">Update Prices:</label>
+    <input type="text" id="priceInput" placeholder="Enter new prices">
+    <button onclick="savePrice()">Save Price</button>
+    <br><br>
+    <label for="updateInput">Farm Updates & Specials:</label>
+    <textarea id="updateInput" placeholder="Enter farm updates"></textarea>
+    <button onclick="saveFarmUpdates()">Save Farm Updates</button>
+</div>
+
+<footer>
+    <p>&copy; 2025 Valley View Farm. All Rights Reserved.</p>
+</footer>
+
+<script>
+    function toggleDrawer() {
+        const drawer = document.getElementById('drawer');
+        drawer.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(event) {
+        const drawer = document.getElementById('drawer');
+        const menuToggleContainer = document.querySelector('.menu-toggle-container');
+
+        if (!menuToggleContainer.contains(event.target) && !drawer.contains(event.target)) {
+            drawer.classList.remove('active');
+        }
+    });
+</script>
+
+<script type="module">
+    // Firebase imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+	import { updateDoc, doc, deleteDoc  } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+	import { getFirestore, collection, addDoc, query, orderBy, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDZx6JgArSKERHWCGISRMHepthTnLT_t_g",
+        authDomain: "valleyviewfarms-f9222.firebaseapp.com",
+        projectId: "valleyviewfarms-f9222",
+        storageBucket: "valleyviewfarms-f9222.firebasestorage.app",
+        messagingSenderId: "293786260387",
+        appId: "1:293786260387:web:d17c491cf7292853384016"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+
+
+		window.savePrice = async function() {
+        try {
+            const priceInput = document.getElementById('priceInput').value;
+            if (!priceInput.trim()) {
+                alert('Please enter a valid price or description.');
+                return;
+            }
+            
+            const docRef = await addDoc(collection(db, "prices"), {
+                price: `${priceInput}`,
+                timestamp: serverTimestamp()
+            });
+            
+            alert('Price saved successfully!');
+            document.getElementById('priceInput').value = ''; // Clear the input field
+            displayPrices(); // Immediately display the updated prices
+        } catch (error) {
+            console.error("Error saving price:", error);
+            alert('Failed to save price.');
+			}
+		};
+
+		window.saveFarmUpdates = async function() {
+        try {
+            const updateInput = document.getElementById('updateInput').value;
+            if (!updateInput.trim()) {
+                alert('Please enter a valid update.');
+                return;
+            }
+
+            const docRef = await addDoc(collection(db, "farmUpdates"), {
+                update: updateInput,
+                timestamp: serverTimestamp()
+            });
+            
+            alert('Farm updates saved successfully!');
+            document.getElementById('updateInput').value = ''; // Clear the input field
+            displayFarmUpdates(); // Immediately display the updated farm updates
+        } catch (error) {
+            console.error("Error saving farm updates:", error);
+				alert('Failed to save farm updates.');
+			}
+		};
+
+		async function displayPrices() {
+        const priceList = document.getElementById("priceList");
+        priceList.innerHTML = "";
+
+        const pricesRef = query(collection(db, "prices"), orderBy("timestamp", "desc"));
+        const snapshot = await getDocs(pricesRef);
+
+        snapshot.forEach((doc) => {
+            const priceData = doc.data();
+            const li = document.createElement("li");
+            li.textContent = priceData.price;
+
+            // Add edit functionality if admin panel is visible
+            li.onclick = () => {
+                const adminSection = document.getElementById("adminSection");
+                if (adminSection.style.display === "block") {
+                    const newPrice = prompt("Edit price:", priceData.price);
+                    if (newPrice === null || newPrice.trim() === "") {
+                        deleteDoc(doc.ref) // Delete the document if the price is empty
+                            .then(() => {
+                                alert("Price deleted successfully!");
+                                displayPrices(); // Refresh the list
+                            })
+                            .catch((error) => {
+                                console.error("Error deleting price:", error);
+                                alert("Failed to delete price.");
+                            });
+                    } else {
+                        updateDoc(doc.ref, { price: `${newPrice}`, timestamp: serverTimestamp() })
+                            .then(() => {
+                                alert("Price updated successfully!");
+                                displayPrices(); // Refresh the list
+                            })
+                            .catch((error) => {
+                                console.error("Error updating price:", error);
+                                alert("Failed to update price.");
+								});
+						}
+					}
+				};
+
+				priceList.appendChild(li);
+			});
+		}
+
+		async function displayFarmUpdates() {
+        const farmUpdatesList = document.getElementById("farmUpdates");
+        farmUpdatesList.innerHTML = "";
+
+        const updatesRef = query(collection(db, "farmUpdates"), orderBy("timestamp", "desc"));
+        const snapshot = await getDocs(updatesRef);
+
+        snapshot.forEach((doc) => {
+            const updateData = doc.data();
+            const li = document.createElement("li");
+            li.textContent = updateData.update;
+
+            // Add edit functionality if admin panel is visible
+            li.onclick = () => {
+                const adminSection = document.getElementById("adminSection");
+                if (adminSection.style.display === "block") {
+                    const newUpdate = prompt("Edit update:", updateData.update);
+                    if (newUpdate === null || newUpdate.trim() === "") {
+                        deleteDoc(doc.ref) // Delete the document if the update is empty
+                            .then(() => {
+                                alert("Farm update deleted successfully!");
+                                displayFarmUpdates(); // Refresh the list
+                            })
+                            .catch((error) => {
+                                console.error("Error deleting farm update:", error);
+                                alert("Failed to delete farm update.");
+                            });
+                    } else {
+                        updateDoc(doc.ref, { update: newUpdate, timestamp: serverTimestamp() })
+                            .then(() => {
+                                alert("Farm update edited successfully!");
+                                displayFarmUpdates(); // Refresh the list
+                            })
+                            .catch((error) => {
+                                console.error("Error updating farm update:", error);
+                                alert("Failed to edit farm update.");
+                            });
+						}
+					}
+				};
+
+				farmUpdatesList.appendChild(li);
+			});
+		}
+
+
+		window.onload = function() {
+			displayPrices();
+			displayFarmUpdates();
+		};
+
+    // Admin Access
+    window.adminAccess = function adminAccess() {
+        const email = prompt("Please enter your admin email:");
+        const password = prompt("Please enter your admin password:");
+
+        if (!email || !password) {
+            alert('Email and password must be provided.');
+            return;
+        }
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                document.getElementById("adminSection").style.display = "block";
+            })
+            .catch(handleAuthError);
+    };
+
+    // Error handling for authentication
+    function handleAuthError(error) {
+        const errorCode = error.code;
+        let errorMessage = '';
+
+        switch (errorCode) {
+            case 'auth/invalid-email':
+                errorMessage = 'The email address is badly formatted.';
+                break;
+            case 'auth/user-disabled':
+                errorMessage = 'The user account has been disabled.';
+                break;
+            case 'auth/user-not-found':
+                errorMessage = 'No user found with this email.';
+                break;
+            case 'auth/wrong-password':
+                errorMessage = 'Incorrect password. Please try again.';
+                break;
+            case 'auth/network-request-failed':
+                errorMessage = 'Network error. Please check your internet connection.';
+                break;
+            default:
+                errorMessage = 'An error occurred. Please try again later.';
+        }
+
+        alert(errorMessage);
+        console.error("Authentication error:", error);
+    }
+
+    // Error handling for displaying error messages on the screen
+    function displayErrorMessage(message) {
+        const errorMessageDiv = document.getElementById('errorMessage');
+        errorMessageDiv.style.display = 'block'; // Show the error message div
+        errorMessageDiv.textContent = message; // Set the error message text
+    }
+</script>
+</body>
+</html>
